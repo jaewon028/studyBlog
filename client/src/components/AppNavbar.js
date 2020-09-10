@@ -54,13 +54,13 @@ const AppNavbar = () => {
             </Link>
           </Form>
         ) : (
-          "권한 없음"
+          ""
         )}
       </NavItem>
       <NavItem className="d-flex justify-content-center">
         <Form className="col mt-2">
           {user && user.name ? (
-            <Link>
+            <Link to="#">
               <Button outline color="light" className="px-3" block>
                 <strong>{user ? `Welcome ${user.name}` : ""}</strong>
               </Button>
