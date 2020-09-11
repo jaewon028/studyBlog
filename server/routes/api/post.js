@@ -19,7 +19,7 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_PRIVATE_KEY,
 });
 
-const uploadS3 = multerS3({
+const uploadS3 = multer({
   storage: multerS3({
     s3,
     bucket: "kanadeproject/upload",
@@ -36,7 +36,7 @@ const uploadS3 = multerS3({
 // @route     POST  api/post/image
 // @desc      Create a Post
 // @access    Private
-router.post("/image", uploadS3.array("upload", 10), async (req, res, next) => {
+router.post("/image", uploadS3.array("upload", 5), async (req, res, next) => {
   try {
     console.log(req.files.map((v) => v.location));
     res.json({ uploaded: true, url: req.files.map((v) => v.location) });
