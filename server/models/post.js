@@ -17,7 +17,7 @@ const PostSchema = new mongoose.Schema({
     type: Number,
     default: -2, // 처음 작성한 사람도 조회 수가 올라가기때문에 -2로 설정.
   },
-  fileurl: {
+  fileUrl: {
     type: String,
     default: "https://source.unsplash.com/random/301x201", // 그림 파일 url 초기값으로 아무거나.
   },
