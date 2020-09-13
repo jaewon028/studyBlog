@@ -15,6 +15,8 @@ import path from "path";
 import AWS from "aws-sdk";
 import dotenv from "dotenv";
 import { isNullOrUndefined } from "util";
+import moment from "moment";
+
 dotenv.config();
 
 // AWS 버켓 키를 가져옴.
@@ -68,8 +70,8 @@ router.post("/", auth, uploadS3.none(), async (req, res, next) => {
       title,
       contents,
       fileUrl,
-      creator,
-      data: moment().format("YYYY-MM-DD hh:mm:ss"),
+      creator: req.user.id,
+      date: moment().format("YYYY-MM-DD hh:mm:ss"),
     });
 
     const findResult = await Category.findOne({

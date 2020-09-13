@@ -13,6 +13,8 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import { editorConfiguration } from "../../components/editor/EditorConfig";
 import Myinit from "../../components/editor/UploadAdapter";
+import { POST_UPLOADING_REQUEST } from "../../redux/types";
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -21,16 +23,22 @@ const PostWrite = () => {
   const [form, setValues] = useState({ title: "", contents: "", fileUrl: "" });
   const dispatch = useDispatch();
 
+  const onSubmit = async (e) => {
+    await e.preventDefault();
+    const { title, contents, fileUrl, category } = form;
+    const token = localStorage.getItem("token");
+    const body = { title, contents, fileUrl, category, token };
+    dispatch({
+      type: POST_UPLOADING_REQUEST,
+      payload: body,
+    });
+  };
+
   const onChange = (e) => {
     setValues({
       ...form,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const onSubmit = async (e) => {
-    await e.preventDefault();
-    const { title, contents, fileUrl, category } = form;
   };
 
   const getDataFromCKEditor = (event, editor) => {
@@ -43,6 +51,7 @@ const PostWrite = () => {
       let whereImg_end = "";
       let ext_name_find = "";
       let result_Img_Url = "";
+
       const ext_name = ["jpeg", "png", "jpg", "gif"];
 
       for (let i = 0; i < ext_name.length; i++) {
@@ -56,9 +65,9 @@ const PostWrite = () => {
       console.log(whereImg_end);
 
       if (ext_name_find === "jpeg") {
-        result_Img_Url = data.subString(whereImg_start + 10, whereImg_end + 4);
+        result_Img_Url = data.substring(whereImg_start + 10, whereImg_end + 4);
       } else {
-        result_Img_Url = data.subString(whereImg_start + 10, whereImg_end + 3);
+        result_Img_Url = data.substring(whereImg_start + 10, whereImg_end + 3);
       }
 
       console.log(result_Img_Url, "result_Img_Url");
@@ -79,7 +88,7 @@ const PostWrite = () => {
   return (
     <div>
       {isAuthenticated ? (
-        <Form>
+        <Form onSubmit={onSubmit}>
           <FormGroup className="mb-3">
             <Label for="title">Title</Label>
             <Input
@@ -91,7 +100,7 @@ const PostWrite = () => {
             />
           </FormGroup>
           <FormGroup className="mb-3">
-            <Label for="Category">Category</Label>
+            <Label for="category">Category</Label>
             <Input
               type="text"
               name="category"
@@ -101,7 +110,7 @@ const PostWrite = () => {
             />
           </FormGroup>
           <FormGroup className="mb-3">
-            <Label for="Content">Content</Label>
+            <Label for="content">Content</Label>
             <CKEditor
               editor={ClassicEditor}
               config={editorConfiguration}
@@ -118,12 +127,11 @@ const PostWrite = () => {
           </FormGroup>
         </Form>
       ) : (
-        <Col widt={50} className="p-5 m-5">
+        <Col width={50} className="p-5 m-5">
           <Progress animated color="info" value={100} />
         </Col>
       )}
     </div>
   );
 };
-
 export default PostWrite;
