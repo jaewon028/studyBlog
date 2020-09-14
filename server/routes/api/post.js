@@ -132,4 +132,20 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// [Comments Route]
+
+// @route Get   api/post/comments
+// @desc  Get   All COmments
+// @aceess  public
+
+router.get("/:id/comments", async (req, res) => {
+  try {
+    const comment = await Post.findById(req.params.id).populate({
+      path: "comments",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 export default router;
