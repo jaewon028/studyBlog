@@ -12,7 +12,11 @@ import {
 import { Link } from "react-router-dom";
 import LoginModal from "../components/auth/LoginModal";
 import { useSelector, useDispatch } from "react-redux";
-import { LOGIN_REQUEST } from "../redux/types";
+import {
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+  POSTS_WRITE_REQUEST,
+} from "../redux/types";
 import RegisterModal from "./auth/RegisterModal";
 import SearchInput from "./search/searchInput";
 const AppNavbar = () => {
@@ -26,7 +30,7 @@ const AppNavbar = () => {
 
   const onLogout = useCallback(() => {
     dispatch({
-      type: LOGIN_REQUEST,
+      type: LOGOUT_REQUEST,
     });
   }, [dispatch]);
 
@@ -38,7 +42,11 @@ const AppNavbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const addPostClick = () => {};
+  const addPostClick = () => {
+    dispatch({
+      type: POSTS_WRITE_REQUEST,
+    });
+  };
 
   // 주인만 인증.
   const authLink = (
@@ -47,7 +55,7 @@ const AppNavbar = () => {
         {userRole === "MainJuin" ? (
           <Form className="col mt-2">
             <Link
-              to="post"
+              to="/post"
               className="btn btn-success block text-white px-3"
               onClick={addPostClick}
             >
@@ -61,7 +69,7 @@ const AppNavbar = () => {
       <NavItem className="d-flex justify-content-center">
         <Form className="col mt-2">
           {user && user.name ? (
-            <Link to="#">
+            <Link to={`/user/${user.name}/profile`}>
               <Button outline color="light" className="px-3" block>
                 <strong>{user ? `Welcome ${user.name}` : ""}</strong>
               </Button>
@@ -75,7 +83,7 @@ const AppNavbar = () => {
       </NavItem>
       <NavItem>
         <Form className="col">
-          <Link onClick={onLogout} to="#">
+          <Link onClick={onLogout} to="#" className="">
             <Button outline color="light" className="mt-2" block>
               Logout
             </Button>

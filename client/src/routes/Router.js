@@ -10,7 +10,11 @@ import PostDetail from "./normalRoute/PostDetail";
 import Search from "./normalRoute/Search";
 import PostEdit from "./normalRoute/PostEdit";
 import CategoryResult from "./normalRoute/CategoryResult";
-import { EditProtectedRoute } from "./protectedRoute/ProtectedRoute";
+import {
+  EditProtectedRoute,
+  ProfileProtectedRoute,
+} from "./protectedRoute/ProtectedRoute";
+import Profile from "./normalRoute/Profile";
 
 const MyRouter = () => (
   <>
@@ -22,13 +26,18 @@ const MyRouter = () => (
         <Route path="/post" exact component={PostWrite} />
         <Route path="/post/:id" exact component={PostDetail} />
         <EditProtectedRoute path="/post/:id/edit" exact component={PostEdit} />
-
         <Route
           path="/post/category/:categoryName"
           exact
           component={CategoryResult}
         />
+
         <Route path="/search/:searchTerm" exact component={Search} />
+        <ProfileProtectedRoute
+          path="/user/:userName/profile"
+          exact
+          component={Profile}
+        />
         <Redirect from="*" to="/" />
       </Switch>
     </Container>
