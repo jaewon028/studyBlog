@@ -212,7 +212,7 @@ router.delete("/:id", auth, async (req, res) => {
 // @route GET api/post/:id/edit
 // @desc  Edit  Post
 // @access Private
-router.get("/:id/edit", async (req, res, next) => {
+router.get("/:id/edit", auth, async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id).populate("creator", "name");
   } catch (e) {
