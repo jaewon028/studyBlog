@@ -14,6 +14,7 @@ import LoginModal from "../components/auth/LoginModal";
 import { useSelector, useDispatch } from "react-redux";
 import { LOGIN_REQUEST } from "../redux/types";
 import RegisterModal from "./auth/RegisterModal";
+import SearchInput from "./search/searchInput";
 const AppNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, user, userRole } = useSelector(
@@ -105,6 +106,7 @@ const AppNavbar = () => {
           </Link>
           <NavbarToggler onClick={handleToggle} />
           <Collapse isOpen={isOpen} navbar>
+            <SearchInput isOpen={isOpen} />
             <Nav className="ml-auto d-flex justify-content-around" navbar>
               {isAuthenticated ? authLink : guestLink}
             </Nav>
