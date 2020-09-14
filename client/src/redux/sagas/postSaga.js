@@ -11,6 +11,9 @@ import {
   POST_DETAIL_LOADING_SUCCESS,
   POST_DETAIL_LOADING_FAILURE,
   POST_DETAIL_LOADING_REQUEST,
+  POST_DELETE_SUCCESS,
+  POST_DELETE_FAILURE,
+  POST_DELETE_REQUEST,
 } from "../types";
 
 // All Posts Load
@@ -124,20 +127,20 @@ function* DeletePost(action) {
   try {
     const result = yield call(DeletePostAPI, action.payload);
     yield put({
-      type: POST_DETAIL_LOADING_SUCCESS,
+      type: POST_DELETE_SUCCESS,
       payload: result.data,
     });
+    yield put(push("/"));
   } catch (e) {
     yield put({
-      type: POST_DETAIL_LOADING_FAILURE,
+      type: POST_DELETE_FAILURE,
       payload: e,
     });
-    yield put(push("/"));
   }
 }
 
 function* watchDeletePost() {
-  yield takeEvery(POST_DETAIL_LOADING_REQUEST, DeletePost);
+  yield takeEvery(POST_DELETE_REQUEST, DeletePost);
 }
 
 export default function* postSaga() {
@@ -145,5 +148,6 @@ export default function* postSaga() {
     fork(watchLoadPosts),
     fork(watchuploadPosts),
     fork(watchloadPostDetail),
+    fork(watchDeletePost),
   ]);
 }
