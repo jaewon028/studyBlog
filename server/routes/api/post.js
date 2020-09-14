@@ -56,8 +56,10 @@ router.post("/image", uploadS3.array("upload", 5), async (req, res, next) => {
 // api/post
 router.get("/", async (req, res) => {
   const postFindResult = await Post.find();
-  console.log(postFindResult, "All Post Get");
-  res.json(postFindResult);
+  const categoryFindResult = await Category.find();
+  const result = { postFindResult, categoryFindResult };
+
+  res.json(result);
 });
 
 // @route     POST api/post
@@ -124,6 +126,7 @@ router.get("/:id", async (req, res, next) => {
     const post = await Post.findById(req.params.id)
       .populate("creator", "name")
       .populate({ path: "category", select: "categoryName" });
+    post.views += 1;
     post.save();
     console.log(post);
     res.json(post);

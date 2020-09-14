@@ -44,7 +44,8 @@ export default function (state = initialState, action) {
     case POSTS_LOADING_SUCCESS:
       return {
         ...state,
-        posts: [...state.posts, ...action.payload],
+        posts: [...state.posts, ...action.payload.postFindResult],
+        categoryFindResult: action.payload.categoryFindResult,
         loading: false,
       };
     case POSTS_LOADING_FAILURE:
