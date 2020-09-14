@@ -104,6 +104,42 @@ function* watchloadPostDetail() {
   yield takeEvery(POST_DETAIL_LOADING_REQUEST, loadPostDetail);
 }
 
+// Post Delete
+const DeletePostAPI = (payload) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const token = payload.token;
+
+  if (token) {
+    config.headers["x-auth-token"] = token;
+  }
+
+  return axios.delete(`/api/post/${payload.id}`, config);
+};
+
+function* DeletePost(action) {
+  try {
+    const result = yield call(DeletePostAPI, action.payload);
+    yield put({
+      type: POST_DETAIL_LOADING_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: POST_DETAIL_LOADING_FAILURE,
+      payload: e,
+    });
+    yield put(push("/"));
+  }
+}
+
+function* watchDeletePost() {
+  yield takeEvery(POST_DETAIL_LOADING_REQUEST, DeletePost);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
