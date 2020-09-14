@@ -208,6 +208,7 @@ function* PostEditUpload(action) {
       type: POST_EDIT_UPLOADING_SUCCESS,
       payload: result.data,
     });
+    yield put(push(`/post/${result.data._id}`));
   } catch (e) {
     yield put({
       type: POST_EDIT_UPLOADING_FAILURE,
