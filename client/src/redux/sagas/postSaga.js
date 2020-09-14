@@ -20,6 +20,9 @@ import {
   POST_EDIT_UPLOADING_SUCCESS,
   POST_EDIT_UPLOADING_FAILURE,
   POST_EDIT_UPLOADING_REQUEST,
+  CATEGORY_FIND_SUCCESS,
+  CATEGORY_FIND_FAILURE,
+  CATEGORY_FIND_REQUEST,
 } from "../types";
 
 // All Posts Load
@@ -222,6 +225,30 @@ function* watchPostEditUpload() {
   yield takeEvery(POST_EDIT_UPLOADING_REQUEST, PostEditUpload);
 }
 
+// Category Find
+const CategoryFindAPI = (payload) => {
+  return axios.get(`/api/post/category/${encodeURIComponent(payload)}`);
+};
+
+function* CategoryFind(action) {
+  try {
+    const result = yield call(CategoryFindAPI, action.payload);
+    yield put({
+      type: CATEGORY_FIND_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: CATEGORY_FIND_FAILURE,
+      payload: e,
+    });
+  }
+}
+
+function* watchCategoryFind() {
+  yield takeEvery(CATEGORY_FIND_REQUEST, CategoryFind);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -230,5 +257,6 @@ export default function* postSaga() {
     fork(watchDeletePost),
     fork(watchPostEditLoad),
     fork(watchPostEditUpload),
+    fork(watchCategoryFind),
   ]);
 }

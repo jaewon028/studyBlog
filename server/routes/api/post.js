@@ -248,4 +248,25 @@ router.post("/:id/edit", auth, async (req, res, next) => {
   }
 });
 
+// @desc Category
+// @access Public
+router.get("/category/:categoryName", async (req, res, next) => {
+  try {
+    const result = await Category.findOne(
+      {
+        categoryName: {
+          $regex: req.params.categoryName,
+          $options: "i",
+        },
+      },
+      "posts"
+    ).populate({ path: "posts" });
+    console.log(result, "Category Find result");
+    res.send(result);
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
 export default router;
