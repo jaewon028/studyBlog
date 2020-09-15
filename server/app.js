@@ -5,6 +5,7 @@ import hpp from "hpp";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
+import path from "path";
 
 // Routes
 import postRoutes from "./routes/api/post";
@@ -14,6 +15,8 @@ import searchRoutes from "./routes/api/search";
 
 const app = express();
 const { MONGO_URI } = config;
+
+const prod = process.env.NODE_ENV === "production";
 
 // 서버 보안 라이브러리 적용.
 app.use(hpp());
@@ -42,5 +45,12 @@ app.use("/api/post", postRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/search", searchRoutes);
+
+if (prod) {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+  });
+}
 
 export default app;
