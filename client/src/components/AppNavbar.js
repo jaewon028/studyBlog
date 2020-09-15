@@ -67,7 +67,7 @@ const AppNavbar = () => {
           {user && user.name ? (
             <Link to={`/user/${user.name}/profile`}>
               <Button outline color="light" className="px-3" block>
-                <strong>{user ? `Welcome ${user.name}` : ""}</strong>
+                <strong>{user ? `Welcome ${user.name} (Profile)` : ""}</strong>
               </Button>
             </Link>
           ) : (

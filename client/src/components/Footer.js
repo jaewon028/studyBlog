@@ -12,7 +12,7 @@ const Footer = () => {
       <Row>
         <Col>
           <p>
-            Copyright &copy; <span>{thisYear()}</span>
+            Copyright &copy; <span>{thisYear()} Kanade (Jaewon Lee)</span>
           </p>
         </Col>
       </Row>
