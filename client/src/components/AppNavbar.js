@@ -12,11 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import LoginModal from "../components/auth/LoginModal";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  LOGIN_REQUEST,
-  LOGOUT_REQUEST,
-  POSTS_WRITE_REQUEST,
-} from "../redux/types";
+import { LOGOUT_REQUEST, POSTS_WRITE_REQUEST } from "../redux/types";
 import RegisterModal from "./auth/RegisterModal";
 import SearchInput from "./search/searchInput";
 const AppNavbar = () => {

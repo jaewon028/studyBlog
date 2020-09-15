@@ -5,7 +5,7 @@ import Post from "../../models/post";
 import User from "../../models/user";
 import Category from "../../models/category";
 import Comment from "../../models/comment";
-
+import "@babel/polyfill";
 import auth from "../../middleware/auth";
 
 const router = express.Router();
@@ -54,12 +54,26 @@ router.post("/image", uploadS3.array("upload", 5), async (req, res, next) => {
 });
 
 // api/post
-router.get("/", async (req, res) => {
-  const postFindResult = await Post.find();
-  const categoryFindResult = await Category.find();
-  const result = { postFindResult, categoryFindResult };
 
-  res.json(result);
+// @route   GET api/post
+// @desc    More Loading Posts
+// @access  public
+router.get("/skip/:skip", async (req, res) => {
+  try {
+    const postCount = await Post.countDocuments();
+    const postFindResult = await Post.find()
+      .skip(Number(req.params.skip))
+      .limit(6)
+      .sort({ date: -1 });
+
+    const categoryFindResult = await Category.find();
+    const result = { postFindResult, categoryFindResult, postCount };
+
+    res.json(result);
+  } catch (e) {
+    console.log(e);
+    res.json({ msg: "더 이상 포스트가 없습니다." });
+  }
 });
 
 // @route     POST api/post
@@ -93,7 +107,7 @@ router.post("/", auth, uploadS3.none(), async (req, res, next) => {
       await Category.findByIdAndUpdate(newCategory._id, {
         $push: { posts: newPost._id },
       });
-      await User.findByIdAndUpdate(req.user._id, {
+      await User.findByIdAndUpdate(req.user.id, {
         $push: {
           posts: newPost._id,
         },
@@ -105,7 +119,7 @@ router.post("/", auth, uploadS3.none(), async (req, res, next) => {
       await Post.findByIdAndUpdate(newPost._id, {
         category: findResult._id,
       });
-      await User.findByIdAndUpdate(req.user._id, {
+      await User.findByIdAndUpdate(req.user.id, {
         $push: {
           posts: newPost._id,
         },
