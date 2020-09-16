@@ -24,6 +24,25 @@ app.use(helmet());
 
 // cors : 브라우저가 다른 도메인이나 포트가 다른 서버에서 자원을 요청해주도록 해주는 것.
 app.use(cors({ origin: true, credentials: true }));
+
+if (prod) {
+  app.use(
+    cors({
+      origin: ["https://www.kanadestudyblog.net", /\.kanadestudyblog.net$/],
+
+      credentials: true,
+    })
+  );
+} else {
+  app.use(morgan("dev"));
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  );
+}
+
 // morgan : log 확인.
 app.use(morgan("dev"));
 
@@ -40,6 +59,18 @@ mongoose
   .catch((e) => console.log(e));
 
 // Use routes
+
+// Use routes
+app.all("*", (req, res, next) => {
+  let protocol = req.headers["x-forward-proto"] || req.protocol;
+  if (protocol === "https") {
+    next();
+  } else {
+    let to = `https://${req.hostname}${req.url}`;
+    res.redirect(to);
+  }
+});
+
 // app.get("/");
 app.use("/api/post", postRoutes);
 app.use("/api/user", userRoutes);
