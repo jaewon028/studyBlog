@@ -23,7 +23,7 @@ app.use(hpp());
 app.use(helmet());
 
 // cors : 브라우저가 다른 도메인이나 포트가 다른 서버에서 자원을 요청해주도록 해주는 것.
-app.use(cors({ origin: true, credentials: true }));
+// app.use(cors({ origin: true, credentials: true }));
 
 if (prod) {
   app.use(
