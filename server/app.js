@@ -28,7 +28,7 @@ app.use(helmet());
 if (prod) {
   app.use(
     cors({
-      origin: ["https://www.kanadestudyblog.net", /\.kanadestudyblog.net$/],
+      origin: ["https://kanadestudyblog.net", /\.kanadestudyblog.net$/],
 
       credentials: true,
     })
