@@ -47,7 +47,6 @@ if (prod) {
     })
   );
 }
-
 // morgan : log 확인.
 app.use(morgan("dev"));
 
