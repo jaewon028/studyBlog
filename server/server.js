@@ -6,17 +6,17 @@ import greenlock from "greenlock-express";
 
 const { PORT } = config;
 
-greenlock
-  .init({
-    packageRoot: path.join(__dirname, "../"),
-    configDir: path.join(__dirname, "../", "server/config/greenlock.d"),
-    maintainerEmail: "jaewon028@gmail.com",
-    cluster: false,
-  })
-  .serve(app, () => {
-    console.log("greenlock work");
-  });
+// greenlock
+//   .init({
+//     packageRoot: path.join(__dirname, "../"),
+//     configDir: path.join(__dirname, "../", "server/config/greenlock.d"),
+//     maintainerEmail: "jaewon028@gmail.com",
+//     cluster: false,
+//   })
+//   .serve(app, () => {
+//     console.log("greenlock work");
+//   });
 
-/* app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server started on Port ${PORT}`);
-}); */
+});
