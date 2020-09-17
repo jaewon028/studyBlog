@@ -552,7 +552,6 @@ module.exports = function (webpackEnv) {
                 /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
               ],
 
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
                 name: "static/media/[name].[hash:8].[ext]",
               },
