@@ -49,7 +49,7 @@ if (prod) {
 }
 
 // morgan : log 확인.
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 
 app.use(express.json());
 
