@@ -20,7 +20,12 @@ const prod = process.env.NODE_ENV === "production";
 
 // 서버 보안 라이브러리 적용.
 app.use(hpp());
-app.use(helmet());
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 // cors : 브라우저가 다른 도메인이나 포트가 다른 서버에서 자원을 요청해주도록 해주는 것.
 // app.use(cors({ origin: true, credentials: true }));
