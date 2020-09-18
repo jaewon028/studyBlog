@@ -7,8 +7,10 @@ const Header = () => {
       <Row>
         <Col md="6" sm="auto" className="text-center m-auto">
           <h1>Study Blog</h1>
-          <h4>방문해주셔서 감사합니다</h4>
-          <h4>訪問してくださってありがとうございます。</h4>
+          <h3 id="header-comment">
+            방문해주셔서 감사합니다. <br />
+            訪問してくださってありがとうございます。
+          </h3>
         </Col>
       </Row>
     </div>

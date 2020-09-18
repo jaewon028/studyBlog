@@ -8,9 +8,14 @@
   background: url(../assets/img/Header_Sakura.JPG);
   background-position: 50% 95%;
   background-attachment: fixed;
-  color: #00008b;
+  color: #0000cd;
   border-bottom: 1px #eee solid;
-  padding-top: 60px;
+  padding-top: 30px;
+}
+
+#page-header #header-comment {
+  color: #fd3c54;
+  padding-top: 5px;
 }
 
 #main-body {
