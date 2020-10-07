@@ -9,7 +9,6 @@ const Header = () => {
           <h1>Study Blog</h1>
           <h3 id="header-comment">
             방문해주셔서 감사합니다. <br />
-            訪問してくださってありがとうございます。
           </h3>
         </Col>
       </Row>

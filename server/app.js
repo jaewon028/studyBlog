@@ -28,8 +28,11 @@ app.use(
 );
 
 // cors : 브라우저가 다른 도메인이나 포트가 다른 서버에서 자원을 요청해주도록 해주는 것.
+
+// 로컬 개발 환경으로 설정 ( 주석 풀어주기 )
 // app.use(cors({ origin: true, credentials: true }));
 
+// https 주소 설정 (주석 처리2)
 if (prod) {
   app.use(
     cors({
@@ -47,6 +50,7 @@ if (prod) {
     })
   );
 }
+
 // morgan : log 확인.
 app.use(morgan("dev"));
 
@@ -64,7 +68,7 @@ mongoose
 
 // Use routes
 
-// Use routes
+// https aws라우터 접근.(주석처리1)
 app.all("*", (req, res, next) => {
   let protocol = req.headers["x-forward-proto"] || req.protocol;
   if (protocol === "https") {

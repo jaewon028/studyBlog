@@ -59,6 +59,7 @@ function* uploadComments(action) {
       type: COMMENT_UPLOADING_FAILURE,
       payload: e,
     });
+    alert("댓글 업로드 실패.");
     yield push("/");
   }
 }
